@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-// --- 1. WELCOME & USER SETUP ---
+
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine("==================================================");
 Console.WriteLine("        WELCOME TO NOVABANK SECURE TERMINAL      ");
@@ -53,7 +53,6 @@ Console.WriteLine($"= {line3.PadRight(maxLength)} =");
 Console.WriteLine(border + "\n");
 Console.ResetColor();
 
-// --- 3. AUTHENTICATION LOCK ---
 int attempts = 3;
 bool authenticated = false;
 
@@ -86,12 +85,10 @@ if (!authenticated)
     return; // Exit application
 }
 
-// --- 4. STATE & AUDIT LEDGER ---
 decimal balance = 5420.50m;
 List<string> transactionHistory = new List<string>();
 bool running = true;
 
-// --- 5. INTERACTIVE BANKING MENU ---
 while (running)
 {
     Console.ForegroundColor = ConsoleColor.DarkGray;
