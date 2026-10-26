@@ -7,7 +7,6 @@ using NovaBankApp.Ui;
 
 namespace NovaBankApp.Application;
 
-/// <summary>Coordinates application workflows while leaving UI, storage, and banking rules in focused classes.</summary>
 public class NovaBankApplication
 {
     private readonly ConsoleUi ui = new();
@@ -19,7 +18,6 @@ public class NovaBankApplication
         new("4", "Cable TV Subscription"), new("5", "Broadband ISP")
     ];
 
-    /// <summary>Starts the local receiver and continues showing the home menu until the user exits.</summary>
     public void Run(string[] arguments)
     {
         var bankingService = new BankingService(accountRepository);
@@ -36,7 +34,6 @@ public class NovaBankApplication
         ShowHomeMenu(accountService, bankingService, adminService, interBankTransferService);
     }
 
-    /// <summary>Routes home-menu choices to onboarding, login, or a clean app exit.</summary>
     private void ShowHomeMenu(AccountService accountService, BankingService bankingService, AdminService adminService, InterBankTransferService interBankTransferService)
     {
         var running = true;
@@ -52,7 +49,6 @@ public class NovaBankApplication
         }
     }
 
-    /// <summary>Collects onboarding information and displays the generated account number once.</summary>
     private void CreateAccount(AccountService accountService)
     {
         ui.ShowMessage("\n=== CREATE NOVABANK ACCOUNT ===", ConsoleColor.Cyan);
@@ -71,7 +67,6 @@ public class NovaBankApplication
         ui.ShowAccountCreated(account);
     }
 
-    /// <summary>Authenticates either the preset administrator or a customer account.</summary>
     private void Login(BankingService bankingService, AdminService adminService, InterBankTransferService interBankTransferService)
     {
         ui.ShowMessage("\n=== LOGIN ===", ConsoleColor.Cyan);
@@ -96,7 +91,6 @@ public class NovaBankApplication
         ShowCustomerMenu(account, bankingService, interBankTransferService);
     }
 
-    /// <summary>Shows all banking actions available to the logged-in customer.</summary>
     private void ShowCustomerMenu(BankAccount account, BankingService bankingService, InterBankTransferService interBankTransferService)
     {
         var running = true;
@@ -117,7 +111,6 @@ public class NovaBankApplication
         }
     }
 
-    /// <summary>Displays administrator tools after a successful administrator login.</summary>
     private void ShowAdminMenu(AdminService adminService)
     {
         var running = true;
@@ -134,7 +127,6 @@ public class NovaBankApplication
         }
     }
 
-    /// <summary>Collects and validates a deposit amount for the current customer.</summary>
     private void Deposit(BankAccount account, BankingService bankingService)
     {
         if (!ConsoleUi.TryReadPositiveAmount(ui.Prompt("Amount to deposit ($): "), out var amount))
@@ -145,7 +137,6 @@ public class NovaBankApplication
         ShowResult(bankingService.Deposit(account, amount));
     }
 
-    /// <summary>Collects and validates a withdrawal amount for the current customer.</summary>
     private void Withdraw(BankAccount account, BankingService bankingService)
     {
         if (!ConsoleUi.TryReadPositiveAmount(ui.Prompt("Amount to withdraw ($): "), out var amount))
@@ -156,7 +147,6 @@ public class NovaBankApplication
         ShowResult(bankingService.Withdraw(account, amount));
     }
 
-    /// <summary>Routes the customer to either local-recipient or HTTP inter-bank transfer flow.</summary>
     private void Transfer(BankAccount account, BankingService bankingService, InterBankTransferService interBankTransferService)
     {
         switch (ui.PromptTransferMenu())
@@ -168,7 +158,6 @@ public class NovaBankApplication
         }
     }
 
-    /// <summary>Looks up a local recipient and requests the sender password before moving funds.</summary>
     private void TransferWithinBank(BankAccount sender, BankingService bankingService)
     {
         var recipient = bankingService.FindRecipient(ui.Prompt("Recipient account number: "));
@@ -193,7 +182,6 @@ public class NovaBankApplication
         ShowResult(bankingService.TransferWithinBank(sender, recipient, amount));
     }
 
-    /// <summary>Posts a transfer to a second NovaBank app running at the supplied local URL.</summary>
     private void TransferToAnotherBank(BankAccount sender, InterBankTransferService interBankTransferService)
     {
         var bankUrl = ui.Prompt("Receiving bank URL (example: http://localhost:5001): ");
@@ -212,7 +200,6 @@ public class NovaBankApplication
         ShowResult(interBankTransferService.TransferAsync(sender, bankUrl, recipientAccountNumber, amount).GetAwaiter().GetResult());
     }
 
-    /// <summary>Handles the existing bill-payment categories with the shared debit rules.</summary>
     private void PayBill(BankAccount account, BankingService bankingService)
     {
         var selectedOption = ui.PromptBillCategory(billCategories);
@@ -232,7 +219,6 @@ public class NovaBankApplication
         ShowResult(bankingService.PayBill(account, category, amount));
     }
 
-    /// <summary>Calculates and displays the existing mock USD, EUR, GBP, and NGN portfolio.</summary>
     private void ShowPortfolio(BankAccount account)
     {
         var currencyWalletService = new CurrencyWalletService();
@@ -240,6 +226,5 @@ public class NovaBankApplication
         account.AddAuditEntry("Viewed multi-currency portfolio");
     }
 
-    /// <summary>Displays operation results using green for success and red for a rejected operation.</summary>
     private void ShowResult(OperationResult result) => ui.ShowMessage(result.Message, result.IsSuccessful ? ConsoleColor.Green : ConsoleColor.Red);
 }
