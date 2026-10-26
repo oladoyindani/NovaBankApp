@@ -1,64 +1,63 @@
 # NovaBank Secure Console Terminal
 
-A feature-rich, production-grade C# console banking application built with modern **Top-Level Statements**. NovaBank provides secure terminal-based banking workflows, complete with PIN authentication, multi-currency wallet conversions, bill payments, and real-time session audit ledgers.
+NovaBank is an educational C# console banking application with customer onboarding, customer and administrator portals, and HTTP-based transfers between two running instances.
 
----
+## Features
 
-## Key Features
+* Create a zero-balance account with name, state, phone number, password, and a generated unique account number.
+* Log in as a customer to deposit, withdraw, make intra-bank or inter-bank transfers, pay bills, view forex values, and inspect account history.
+* Confirm transfers with the sender's password and display a local recipient's details before an intra-bank transfer.
+* Receive inter-bank transfer requests through `POST /api/transfers` using an interface-based HTTP client/server design.
+* Log in as an administrator and freeze or unfreeze accounts. Frozen accounts cannot initiate transactions, but can still receive funds.
 
-* **Secure Authentication Layer**: Requires a custom 4-digit numeric PIN configuration on startup, featuring a 3-attempt lock mechanism for security.
-* **Dynamic Welcome Banner**: Automatically calculates text string lengths to render a responsive ASCII border box (`=`) tailored to the user's name and branch.
-* **Core Account Operations**:
-  * **Balance Checking**: Displays current balances formatted securely with currency and comma separators (`:N2`).
-  * **Deposits**: Increment funds instantly with real-time feedback.
-  * **Transfers & Withdrawals**: Secure balance validation to prevent overdrafts.
-* **Comprehensive Bill Payments Portal**: Supports 5 major categories:
-  * Airtime Recharge
-  * Internet Data Bundles
-  * Electricity Tokens (Prepaid/Postpaid)
-  * Cable TV (DStv/GOtv)
-  * Broadband / Fiber ISP
-* **Multi-Currency Global Forex Wallet**: Instantly converts standard USD balances into global currencies (**EUR, GBP, and NGN**) using realistic mock exchange rates.
-* **Session Audit Ledger**: Itemized, timestamped transaction history logging every action taken during the session.
+## Project Structure
 
----
+* `Application/` coordinates console workflows without containing banking rules.
+* `Models/` contains account, transaction, bill, and result data.
+* `Data/` contains the in-memory account repository abstraction and implementation.
+* `Services/` contains account creation, authentication, banking, administration, wallet, and transfer rules.
+* `Contracts/` contains the request/response objects and interface used for HTTP transfers.
+* `Network/` contains the HTTP client and local HTTP listener.
+* `Ui/` contains all console prompts and display formatting.
 
-## Tech Stack & Requirements
+## Run One Instance
 
-* **Language**: C# 9+ (Top-Level Statements)
-* **Runtime**: .NET 6.0 SDK or higher (`.NET 8.0` / `.NET 9.0` compatible)
-* **Platform**: Cross-platform (Windows, macOS, Linux)
+```bash
+dotnet run --project NovaBankApp/NovaBankApp.csproj -- --port 5000
+```
 
----
+The `--port` argument is optional; the default is `5000`.
 
-## Getting Started & Installation
+## Run Two Instances
 
-1. **Clone or Create the Project**
-   Open your terminal and initialize a new C# console application:
-   ```bash
-   dotnet new console -n NovaBank.Welcome
-   cd NovaBank.Welcome
-   ```
+Open two terminals from the project root:
 
-2. **Add the Source Code**
-   Replace the contents of your `Program.cs` file with the application script.
+```bash
+dotnet run --project NovaBankApp/NovaBankApp.csproj -- --port 5000
+dotnet run --project NovaBankApp/NovaBankApp.csproj -- --port 5001
+```
 
-3. **Run the Application**
-   Execute the program using the .NET CLI:
-   ```bash
-   dotnet run
-   ```
+Create or log in to a customer on each instance. On the sending instance select **Transfer Funds → Inter-Bank Transfer**, enter the other app's URL (for example `http://localhost:5001`), then enter the receiving account number and confirm with your password.
 
----
+Each app has its own in-memory data, so a customer must exist in the receiving app before it can receive an inter-bank transfer. Data resets when that app exits.
 
-## Usage Walkthrough
+## Demo Accounts
 
-1. **User Setup**: Enter your preferred customer name and branch city when prompted.
-2. **PIN Creation**: Set up your secure 4-digit numeric PIN.
-3. **Authentication**: Enter your PIN to unlock the main terminal.
-4. **Navigation**: Use the interactive numeric menu (`1` through `7`) to execute transactions, pay bills, or view your multi-currency portfolio and audit log.
+Each newly launched app seeds these local accounts for intra-bank transfer testing:
 
----
+| Name | Account number | Password |
+| --- | --- | --- |
+| Ada Lovelace | `1000000001` | `demo123` |
+| Tunde Okafor | `1000000002` | `demo123` |
 
-## License
-This project is developed for educational and portfolio demonstration purposes.
+## Administrator Login
+
+Use the following preset credentials at the normal login screen:
+
+| User name | Password |
+| --- | --- |
+| `admin` | `Admin@123` |
+
+## Educational Scope
+
+Accounts are intentionally stored in memory and the inter-bank endpoint has no production authentication or encryption. A production version should use persistent storage, identity management, TLS, signed requests, and transactional database operations.
