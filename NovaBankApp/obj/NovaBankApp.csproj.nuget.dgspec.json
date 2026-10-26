@@ -10,11 +10,11 @@
         "projectUniqueName": "/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/NovaBankApp.csproj",
         "projectName": "NovaBankApp",
         "projectPath": "/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/NovaBankApp.csproj",
-        "packagesPath": "/root/.nuget/packages/",
+        "packagesPath": "/home/oladoyin-daniel/.nuget/packages/",
         "outputPath": "/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/root/.nuget/NuGet/NuGet.Config"
+          "/home/oladoyin-daniel/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -60,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.112/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.113/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

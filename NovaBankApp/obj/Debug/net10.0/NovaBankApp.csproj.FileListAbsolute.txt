@@ -26,3 +26,4 @@ C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp
 /home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.pdb
 /home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.genruntimeconfig.cache
 /home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/ref/NovaBankApp.dll
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.sourcelink.json

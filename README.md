@@ -47,8 +47,8 @@ Each newly launched app seeds these local accounts for intra-bank transfer testi
 
 | Name | Account number | Password |
 | --- | --- | --- |
-| Ada Lovelace | `1000000001` | `demo123` |
-| Tunde Okafor | `1000000002` | `demo123` |
+| Brian Naheemat | `1000000001` | `test123` |
+| Francis Chocboy | `1000000002` | `test123` |
 
 ## Administrator Login
 
