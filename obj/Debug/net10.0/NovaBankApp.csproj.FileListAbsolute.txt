@@ -1,0 +1,28 @@
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.exe
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.deps.json
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.runtimeconfig.json
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.dll
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.pdb
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.AssemblyInfoInputs.cache
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.AssemblyInfo.cs
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.csproj.CoreCompileInputs.cache
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.dll
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/refint/NovaBankApp.dll
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.pdb
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.genruntimeconfig.cache
+C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/ref/NovaBankApp.dll
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.deps.json
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.runtimeconfig.json
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.dll
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.pdb
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.GeneratedMSBuildEditorConfig.editorconfig
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.AssemblyInfoInputs.cache
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.AssemblyInfo.cs
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.csproj.CoreCompileInputs.cache
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.dll
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/refint/NovaBankApp.dll
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.pdb
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.genruntimeconfig.cache
+/home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/ref/NovaBankApp.dll

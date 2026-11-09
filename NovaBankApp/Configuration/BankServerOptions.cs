@@ -1,9 +1,7 @@
 namespace NovaBankApp.Configuration;
 
-/// <summary>Reads the HTTP listening port used to receive inter-bank transfer requests.</summary>
 public record BankServerOptions(int Port)
 {
-    /// <summary>Creates options from an optional <c>--port 5001</c> command-line argument.</summary>
     public static BankServerOptions FromArguments(string[] arguments)
     {
         var portIndex = Array.IndexOf(arguments, "--port");

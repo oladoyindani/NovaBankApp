@@ -7,10 +7,9 @@ using NovaBankApp.Services;
 
 namespace NovaBankApp.Network;
 
-/// <summary>Hosts the HTTP endpoints for inter-bank transfers and bill-payment requests.</summary>
+/// <summary>Hosts the minimal HTTP endpoint that accepts funds from another NovaBank instance.</summary>
 public class InterBankTransferServer : IDisposable
 {
-    // Web JSON clients commonly send camelCase property names, so accept them case-insensitively.
     private static readonly JsonSerializerOptions jsonOptions = new() { PropertyNameCaseInsensitive = true };
     private static readonly JsonSerializerOptions billPaymentResponseJsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
     private readonly HttpListener listener = new();
@@ -19,13 +18,8 @@ public class InterBankTransferServer : IDisposable
     private readonly CancellationTokenSource cancellationTokenSource = new();
 
     /// <summary>Builds the local transfer receiver around the shared banking rules.</summary>
-    public InterBankTransferServer(BankingService bankingService, BillPaymentProviderService billPaymentProviderService)
-    {
-        this.bankingService = bankingService;
-        this.billPaymentProviderService = billPaymentProviderService;
-    }
+    public InterBankTransferServer(BankingService bankingService) => this.bankingService = bankingService;
 
-    /// <summary>Starts listening in the background for POST requests to <c>/api/transfers</c>.</summary>
     public bool Start(int port, out string message)
     {
         try
@@ -43,7 +37,6 @@ public class InterBankTransferServer : IDisposable
         }
     }
 
-    /// <summary>Continuously accepts requests until the console application exits.</summary>
     private async Task ListenAsync()
     {
         while (!cancellationTokenSource.IsCancellationRequested)
@@ -51,12 +44,10 @@ public class InterBankTransferServer : IDisposable
             try { await ProcessRequestAsync(await listener.GetContextAsync()); }
             catch (HttpListenerException) when (cancellationTokenSource.IsCancellationRequested) { }
             catch (ObjectDisposedException) when (cancellationTokenSource.IsCancellationRequested) { }
-            // Log unexpected handler failures so a malformed request does not silently leave callers waiting.
             catch (Exception exception) { Console.Error.WriteLine($"[Inter-bank receiver error] {exception.Message}"); }
         }
     }
 
-    /// <summary>Routes one HTTP request and sends a JSON acknowledgement to the sender.</summary>
     private async Task ProcessRequestAsync(HttpListenerContext context)
     {
         var path = context.Request.Url?.AbsolutePath ?? string.Empty;
@@ -151,10 +142,8 @@ public class InterBankTransferServer : IDisposable
         context.Response.Close();
     }
 
-    /// <summary>Maps an internal operation result to the public HTTP response contract.</summary>
     private static InterBankTransferResponse ToResponse(Models.OperationResult result) => new(result.IsSuccessful, result.Message);
 
-    /// <summary>Stops the listener and releases its local TCP port.</summary>
     public void Dispose()
     {
         cancellationTokenSource.Cancel();

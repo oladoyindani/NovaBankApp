@@ -2,7 +2,6 @@ using NovaBankApp.Models;
 
 namespace NovaBankApp.Data;
 
-/// <summary>Abstracts account storage from the rest of the application.</summary>
 public interface IAccountRepository
 {
     bool Add(BankAccount account);

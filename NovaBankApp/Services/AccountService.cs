@@ -4,20 +4,17 @@ using NovaBankApp.Models;
 
 namespace NovaBankApp.Services;
 
-/// <summary>Creates accounts and seeds local recipients for intra-bank transfer demonstrations.</summary>
 public class AccountService
 {
     private readonly IAccountRepository accountRepository;
     private readonly AuthenticationService authenticationService;
 
-    /// <summary>Builds the account service from its storage and password dependencies.</summary>
     public AccountService(IAccountRepository accountRepository, AuthenticationService authenticationService)
     {
         this.accountRepository = accountRepository;
         this.authenticationService = authenticationService;
     }
 
-    /// <summary>Creates a zero-balance customer account with a generated unique ten-digit account number.</summary>
     public OperationResult CreateAccount(string customerName, string state, string phoneNumber, string password, out BankAccount? account)
     {
         account = null;
@@ -34,14 +31,12 @@ public class AccountService
         return OperationResult.Success("Account created successfully.");
     }
 
-    /// <summary>Adds mock local customers so a new account can demonstrate intra-bank transfers immediately.</summary>
     public void SeedDemoAccounts()
     {
         CreateDemoAccount("Brian Naheemat", "Ojo", "08010000001", "test123", "1000000001", 2500m);
         CreateDemoAccount("Francis Chocboy", "Apapa", "08010000002", "test123", "1000000002", 1800m);
     }
 
-    /// <summary>Creates a named seed account only when it does not already exist.</summary>
     private void CreateDemoAccount(string name, string state, string phone, string password, string accountNumber, decimal openingBalance)
     {
         if (accountRepository.GetByAccountNumber(accountNumber) is not null) return;
@@ -50,7 +45,6 @@ public class AccountService
         accountRepository.Add(account);
     }
 
-    /// <summary>Generates a cryptographically random account number and verifies repository uniqueness.</summary>
     private string GenerateAccountNumber()
     {
         string accountNumber;
