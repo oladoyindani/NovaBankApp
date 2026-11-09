@@ -13,6 +13,7 @@ public class NovaBankApplication
     private readonly ConsoleUi ui = new();
     private readonly AuthenticationService authenticationService = new();
     private readonly IAccountRepository accountRepository = new InMemoryAccountRepository();
+    private readonly IBillPaymentRepository billPaymentRepository = new InMemoryBillPaymentRepository();
     private readonly IReadOnlyList<BillCategory> billCategories =
     [
         new("1", "Airtime Recharge"), new("2", "Data Bundle"), new("3", "Electricity Bill"),
@@ -25,19 +26,20 @@ public class NovaBankApplication
         var bankingService = new BankingService(accountRepository);
         var accountService = new AccountService(accountRepository, authenticationService);
         var adminService = new AdminService(accountRepository);
+        var billPaymentProviderService = new BillPaymentProviderService(billPaymentRepository);
         var interBankTransferService = new InterBankTransferService(bankingService, new HttpInterBankTransferClient());
         var options = BankServerOptions.FromArguments(arguments);
-        using var transferServer = new InterBankTransferServer(bankingService);
+        using var transferServer = new InterBankTransferServer(bankingService, billPaymentProviderService);
 
         accountService.SeedDemoAccounts();
         ui.ShowStartupBanner();
         var started = transferServer.Start(options.Port, out var serverMessage);
         ui.ShowMessage(serverMessage, started ? ConsoleColor.DarkGray : ConsoleColor.Yellow);
-        ShowHomeMenu(accountService, bankingService, adminService, interBankTransferService);
+        ShowHomeMenu(accountService, bankingService, adminService, billPaymentProviderService, interBankTransferService);
     }
 
     /// <summary>Routes home-menu choices to onboarding, login, or a clean app exit.</summary>
-    private void ShowHomeMenu(AccountService accountService, BankingService bankingService, AdminService adminService, InterBankTransferService interBankTransferService)
+    private void ShowHomeMenu(AccountService accountService, BankingService bankingService, AdminService adminService, BillPaymentProviderService billPaymentProviderService, InterBankTransferService interBankTransferService)
     {
         var running = true;
         while (running)
@@ -45,7 +47,7 @@ public class NovaBankApplication
             switch (ui.PromptHomeMenu())
             {
                 case "1": CreateAccount(accountService); break;
-                case "2": Login(bankingService, adminService, interBankTransferService); break;
+                case "2": Login(bankingService, adminService, billPaymentProviderService, interBankTransferService); break;
                 case "3": running = false; ui.ShowMessage("Thank you for banking with NovaBank. Goodbye!", ConsoleColor.Yellow); break;
                 default: ui.ShowMessage("Select a number from 1 to 3.", ConsoleColor.Red); break;
             }
@@ -72,7 +74,7 @@ public class NovaBankApplication
     }
 
     /// <summary>Authenticates either the preset administrator or a customer account.</summary>
-    private void Login(BankingService bankingService, AdminService adminService, InterBankTransferService interBankTransferService)
+    private void Login(BankingService bankingService, AdminService adminService, BillPaymentProviderService billPaymentProviderService, InterBankTransferService interBankTransferService)
     {
         ui.ShowMessage("\n=== LOGIN ===", ConsoleColor.Cyan);
         var userName = ui.Prompt("User name: ");
@@ -81,7 +83,7 @@ public class NovaBankApplication
         if (adminService.IsAdmin(userName, password))
         {
             ui.ShowMessage("Administrator login successful.", ConsoleColor.Green);
-            ShowAdminMenu(adminService);
+            ShowAdminMenu(adminService, billPaymentProviderService);
             return;
         }
 
@@ -118,7 +120,7 @@ public class NovaBankApplication
     }
 
     /// <summary>Displays administrator tools after a successful administrator login.</summary>
-    private void ShowAdminMenu(AdminService adminService)
+    private void ShowAdminMenu(AdminService adminService, BillPaymentProviderService billPaymentProviderService)
     {
         var running = true;
         while (running)
@@ -128,8 +130,9 @@ public class NovaBankApplication
                 case "1": ui.ShowAccounts(adminService.GetAccounts()); break;
                 case "2": ShowResult(adminService.Freeze(ui.Prompt("Account number to freeze: "))); break;
                 case "3": ShowResult(adminService.Unfreeze(ui.Prompt("Account number to unfreeze: "))); break;
-                case "4": running = false; ui.ShowMessage("Administrator logged out.", ConsoleColor.Yellow); break;
-                default: ui.ShowMessage("Select a number from 1 to 4.", ConsoleColor.Red); break;
+                case "4": ui.ShowBillPaymentHistory(billPaymentProviderService.GetPaymentHistory()); break;
+                case "5": running = false; ui.ShowMessage("Administrator logged out.", ConsoleColor.Yellow); break;
+                default: ui.ShowMessage("Select a number from 1 to 5.", ConsoleColor.Red); break;
             }
         }
     }

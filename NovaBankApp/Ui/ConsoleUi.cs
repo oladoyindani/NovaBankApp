@@ -47,8 +47,8 @@ public class ConsoleUi
     /// <summary>Shows the actions reserved for the preset administrator account.</summary>
     public string PromptAdminMenu()
     {
-        Console.WriteLine("\nADMIN PORTAL:\n  1. View Accounts\n  2. Freeze Account\n  3. Unfreeze Account\n  4. Logout");
-        return Prompt("Select an option (1-4): ");
+        Console.WriteLine("\nADMIN PORTAL:\n  1. View Accounts\n  2. Freeze Account\n  3. Unfreeze Account\n  4. View Bill Payment API History\n  5. Logout");
+        return Prompt("Select an option (1-5): ");
     }
 
     /// <summary>Shows the two possible routes for sending money.</summary>
@@ -101,6 +101,21 @@ public class ConsoleUi
     {
         ShowMessage("=== CUSTOMER ACCOUNTS ===", ConsoleColor.Magenta);
         foreach (var account in accounts) Console.WriteLine($"{account.AccountNumber} | {account.CustomerName} | {account.City} | ${account.Balance:N2} | {(account.IsFrozen ? "FROZEN" : "ACTIVE")}");
+    }
+
+    public void ShowBillPaymentHistory(IReadOnlyList<BillPaymentRecord> payments)
+    {
+        ShowMessage("=== BILL PAYMENT API HISTORY ===", ConsoleColor.Magenta);
+        if (payments.Count == 0)
+        {
+            Console.WriteLine("No bill-payment API requests have been processed.");
+            return;
+        }
+
+        foreach (var payment in payments)
+        {
+            Console.WriteLine($"{payment.ProcessedAt:yyyy-MM-dd HH:mm:ss} | {payment.TransactionId} | {payment.PaymentType} | {payment.PhoneNumber} | ${payment.Amount:N2} | {(payment.IsSuccessful ? "SUCCESS" : "FAILED")} | {payment.Message}");
+        }
     }
 
     /// <summary>Parses currency values and accepts only positive amounts.</summary>
