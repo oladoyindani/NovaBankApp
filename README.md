@@ -8,6 +8,7 @@ NovaBank is an educational C# console banking application with customer onboardi
 * Log in as a customer to deposit, withdraw, make intra-bank or inter-bank transfers, pay bills, view forex values, and inspect account history.
 * Confirm transfers with the sender's password and display a local recipient's details before an intra-bank transfer.
 * Receive inter-bank transfer requests through `POST /api/transfers` using an interface-based HTTP client/server design.
+* Provide simulated airtime and data purchases over HTTP, with provider-side history, duplicate detection, and transaction status lookup.
 * Log in as an administrator and freeze or unfreeze accounts. Frozen accounts cannot initiate transactions, but can still receive funds.
 
 ## Project Structure
@@ -60,4 +61,30 @@ Use the following preset credentials at the normal login screen:
 
 ## Educational Scope
 
-Accounts are intentionally stored in memory and the inter-bank endpoint has no production authentication or encryption. A production version should use persistent storage, identity management, TLS, signed requests, and transactional database operations.
+Account and payment data are intentionally stored in memory and reset when the app exits. The inter-bank and bill-payment endpoints have no production authentication or encryption. A production version should use persistent storage, identity management, TLS, signed requests, and transactional database operations.
+
+## Bill-Payment Provider API
+
+This app can act as a local HTTP provider for a duplicated/client app. Start this instance with a port, then send requests to that host and port. The listener binds to `localhost`, so both apps must run on the same machine.
+
+### Buy airtime or data
+
+Send a `POST` request to `/api/bills/airtime` or `/api/bills/data` with a caller-generated GUID transaction ID, destination phone number, and positive amount:
+
+```bash
+curl -X POST http://localhost:5000/api/bills/airtime \
+  -H "Content-Type: application/json" \
+  -d '{"transactionId":"8af59302-89af-4e20-9818-afb3ac7f2c51","phoneNumber":"08012345678","amount":100}'
+```
+
+The data route uses the same request shape. Successful purchases return HTTP `200` and a JSON response with `transactionId`, `paymentType`, `isSuccessful`, `isDuplicate`, `message`, and `processedAt`. Invalid requests return HTTP `400`; a reused transaction ID returns HTTP `409`. Use a unique ID for each purchase and reuse the same ID when retrying after a timeout.
+
+### Check a transaction
+
+After a duplicate response or timeout, retrieve the original result using:
+
+```text
+GET http://localhost:5000/api/bills/payments/{transactionId}
+```
+
+The response contains the original payment result; unknown IDs return HTTP `404`. The provider records valid transaction IDs, including rejected payment attempts, in memory, so a failed attempt cannot later be retried under the same ID. This is a demo provider: a valid request is recorded as successful but is not sent to a real airtime or data carrier.
