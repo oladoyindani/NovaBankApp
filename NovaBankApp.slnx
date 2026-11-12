@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="NovaBankApp/NovaBankApp.csproj" />
+  <Project Path="WebApiNovaBank/WebApiNovaBank.csproj" />
 </Solution>

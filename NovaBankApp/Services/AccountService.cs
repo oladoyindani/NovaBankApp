@@ -4,12 +4,12 @@ using NovaBankApp.Models;
 
 namespace NovaBankApp.Services;
 
-public class AccountService
+public class AccountService : IAccountService
 {
     private readonly IAccountRepository accountRepository;
-    private readonly AuthenticationService authenticationService;
+    private readonly IAuthenticationService authenticationService;
 
-    public AccountService(IAccountRepository accountRepository, AuthenticationService authenticationService)
+    public AccountService(IAccountRepository accountRepository, IAuthenticationService authenticationService)
     {
         this.accountRepository = accountRepository;
         this.authenticationService = authenticationService;
@@ -20,7 +20,7 @@ public class AccountService
         account = null;
         if (string.IsNullOrWhiteSpace(customerName) || string.IsNullOrWhiteSpace(state) || string.IsNullOrWhiteSpace(phoneNumber)) return OperationResult.Failure("Name, state, and phone number are required.");
         if (!phoneNumber.All(char.IsDigit)) return OperationResult.Failure("Phone number must contain digits only.");
-        if (!authenticationService.IsValidPassword(password)) return OperationResult.Failure("Password must be at least 4 characters.");
+        if (!authenticationService.IsValidPassword(password)) return OperationResult.Failure("Password must be at least 12 characters.");
         if (accountRepository.GetByCustomerName(customerName) is not null) return OperationResult.Failure("An account already exists for that user name.");
 
         var accountNumber = GenerateAccountNumber();
@@ -36,6 +36,12 @@ public class AccountService
         CreateDemoAccount("Brian Naheemat", "Ojo", "08010000001", "test123", "1000000001", 2500m);
         CreateDemoAccount("Francis Chocboy", "Apapa", "08010000002", "test123", "1000000002", 1800m);
     }
+
+    public BankAccount? GetByAccountNumber(string accountNumber) =>
+        accountRepository.GetByAccountNumber(accountNumber);
+
+    public BankAccount? GetByCustomerName(string customerName) =>
+        accountRepository.GetByCustomerName(customerName);
 
     private void CreateDemoAccount(string name, string state, string phone, string password, string accountNumber, decimal openingBalance)
     {

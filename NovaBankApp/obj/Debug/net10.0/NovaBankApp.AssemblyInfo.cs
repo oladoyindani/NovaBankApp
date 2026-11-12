@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NovaBankApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+17ed9ce846a229d1623b3bf335ce2b5e62895b7a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0ee9e604bf5bad2fd935afecee4457971dffc63")]
 [assembly: System.Reflection.AssemblyProductAttribute("NovaBankApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NovaBankApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

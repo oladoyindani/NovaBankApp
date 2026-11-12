@@ -3,7 +3,7 @@ using NovaBankApp.Models;
 
 namespace NovaBankApp.Services;
 
-public class AdminService
+public class AdminService : IAdminService
 {
     private const string AdminUserName = "admin";
     private const string AdminPassword = "Admin@123";

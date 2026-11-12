@@ -5,7 +5,16 @@ namespace NovaBankApp.Network;
 
 public class HttpInterBankTransferClient : IInterBankTransferClient
 {
-    private readonly HttpClient httpClient = new() { Timeout = TimeSpan.FromSeconds(10) };
+    private readonly HttpClient httpClient;
+
+    public HttpInterBankTransferClient() : this(new HttpClient { Timeout = TimeSpan.FromSeconds(10) })
+    {
+    }
+
+    public HttpInterBankTransferClient(HttpClient httpClient)
+    {
+        this.httpClient = httpClient;
+    }
 
     public async Task<InterBankTransferResponse> SendAsync(string bankUrl, InterBankTransferRequest request, CancellationToken cancellationToken = default)
     {

@@ -2,7 +2,7 @@ using NovaBankApp.Models;
 
 namespace NovaBankApp.Services;
 
-public class CurrencyWalletService
+public class CurrencyWalletService : ICurrencyWalletService
 {
     private readonly IReadOnlyList<CurrencyBalance> currencies =
     [

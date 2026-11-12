@@ -6,4 +6,4 @@ public record BillPaymentResponse(
     bool IsSuccessful,
     bool IsDuplicate,
     string Message,
-    DateTime ProcessedAt);
+    DateTimeOffset ProcessedAt);

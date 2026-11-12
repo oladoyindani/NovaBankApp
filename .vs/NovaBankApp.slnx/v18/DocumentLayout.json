@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{964BDD70-409A-4CF7-B6FF-B059209A02CA}|NovaBankApp\\NovaBankApp.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\novabankapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{964BDD70-409A-4CF7-B6FF-B059209A02CA}|NovaBankApp\\NovaBankApp.csproj|solutionrelative:novabankapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D2C9E0D8-9E06-47E3-95D5-C97BA7604CC3}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2C9E0D8-9E06-47E3-95D5-C97BA7604CC3}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E64E8C17-3CEA-1A8C-58CA-FDC76D1AF8B1}|NovaBankApp\\NovaBankApp.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\novabankapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E64E8C17-3CEA-1A8C-58CA-FDC76D1AF8B1}|NovaBankApp\\NovaBankApp.csproj|solutionrelative:novabankapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,17 +18,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Controllers\\WeatherForecastController.cs",
+              "RelativeDocumentMoniker": "WebApiNovaBank\\Controllers\\WeatherForecastController.cs",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Controllers\\WeatherForecastController.cs",
+              "RelativeToolTip": "WebApiNovaBank\\Controllers\\WeatherForecastController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T11:38:17.367Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\NovaBankApp\\Program.cs",
               "RelativeDocumentMoniker": "NovaBankApp\\Program.cs",
               "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\NovaBankApp\\Program.cs",
               "RelativeToolTip": "NovaBankApp\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-15T12:59:09.62Z",
               "EditorCaption": ""

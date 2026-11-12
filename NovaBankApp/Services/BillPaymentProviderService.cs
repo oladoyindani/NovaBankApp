@@ -4,7 +4,7 @@ using NovaBankApp.Models;
 
 namespace NovaBankApp.Services;
 
-public class BillPaymentProviderService
+public class BillPaymentProviderService : IBillPaymentProviderService
 {
     private readonly IBillPaymentRepository billPaymentRepository;
 
@@ -13,7 +13,10 @@ public class BillPaymentProviderService
         this.billPaymentRepository = billPaymentRepository;
     }
 
-    public BillPaymentResponse Process(BillPaymentType paymentType, BillPaymentRequest request)
+    public BillPaymentResponse Process(
+        BillPaymentType paymentType,
+        BillPaymentRequest request,
+        string? accountNumber = null)
     {
         if (!Guid.TryParse(request.TransactionId, out var transactionGuid))
         {
@@ -32,7 +35,8 @@ public class BillPaymentProviderService
             request.Amount,
             response.ProcessedAt,
             response.IsSuccessful,
-            response.Message);
+            response.Message,
+            accountNumber);
 
         if (!billPaymentRepository.TryAdd(payment))
         {
@@ -41,8 +45,8 @@ public class BillPaymentProviderService
                 paymentType.ToString(),
                 false,
                 true,
-                "Duplicate transaction ID. Use GET /api/bills/payments/{transactionId} to check the original payment.",
-                DateTime.UtcNow);
+                "Duplicate transaction ID. Check the original payment status before retrying.",
+                DateTimeOffset.UtcNow);
         }
 
         return response;
@@ -51,18 +55,28 @@ public class BillPaymentProviderService
     public BillPaymentResponse? GetStatus(string transactionId)
     {
         var payment = billPaymentRepository.GetByTransactionId(transactionId);
-        return payment is null
+        return ToResponse(payment);
+    }
+
+    public BillPaymentResponse? GetStatusForAccount(string transactionId, string accountNumber)
+    {
+        var payment = billPaymentRepository.GetByTransactionId(transactionId);
+        return payment is null || !string.Equals(payment.AccountNumber, accountNumber, StringComparison.Ordinal)
             ? null
-            : new BillPaymentResponse(
-                payment.TransactionId,
-                payment.PaymentType.ToString(),
-                payment.IsSuccessful,
-                false,
-                payment.Message,
-                payment.ProcessedAt);
+            : ToResponse(payment);
     }
 
     public IReadOnlyList<BillPaymentRecord> GetPaymentHistory() => billPaymentRepository.GetAll();
+
+    private static BillPaymentResponse? ToResponse(BillPaymentRecord? payment) => payment is null
+        ? null
+        : new BillPaymentResponse(
+            payment.TransactionId,
+            payment.PaymentType.ToString(),
+            payment.IsSuccessful,
+            false,
+            payment.Message,
+            payment.ProcessedAt);
 
     private static string? Validate(BillPaymentRequest request)
     {
@@ -87,7 +101,7 @@ public class BillPaymentProviderService
         true,
         false,
         $"{paymentType} purchase of ${amount:N2} for {phoneNumber} was completed.",
-        DateTime.UtcNow);
+        DateTimeOffset.UtcNow);
 
     private static BillPaymentResponse Failure(string transactionId, BillPaymentType paymentType, string message) => new(
         transactionId,
@@ -95,5 +109,5 @@ public class BillPaymentProviderService
         false,
         false,
         message,
-        DateTime.UtcNow);
+        DateTimeOffset.UtcNow);
 }

@@ -57,7 +57,7 @@ public class NovaBankApplication
         var name = ui.Prompt("Full name / login user name: ");
         var city = ui.Prompt("City: ");
         var phoneNumber = ui.Prompt("Phone number: ");
-        var password = ui.Prompt("Create password (at least 4 characters): ");
+        var password = ui.Prompt("Create password (at least 12 characters): ");
         var result = accountService.CreateAccount(name, city, phoneNumber, password, out var account);
 
         if (!result.IsSuccessful || account is null)

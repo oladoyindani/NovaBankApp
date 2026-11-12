@@ -105,13 +105,13 @@ public class InterBankTransferServer : IDisposable
                 false,
                 false,
                 "Request body must contain valid JSON.",
-                DateTime.UtcNow);
+                DateTimeOffset.UtcNow);
             await WriteJsonAsync(context, invalidRequest, HttpStatusCode.BadRequest, billPaymentResponseJsonOptions);
             return;
         }
 
         var result = request is null
-            ? new BillPaymentResponse(string.Empty, paymentType.ToString(), false, false, "Bill payment request body is required.", DateTime.UtcNow)
+            ? new BillPaymentResponse(string.Empty, paymentType.ToString(), false, false, "Bill payment request body is required.", DateTimeOffset.UtcNow)
             : billPaymentProviderService.Process(paymentType, request);
         var statusCode = result.IsDuplicate
             ? HttpStatusCode.Conflict

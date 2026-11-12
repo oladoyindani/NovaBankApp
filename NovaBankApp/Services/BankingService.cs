@@ -3,7 +3,7 @@ using NovaBankApp.Models;
 
 namespace NovaBankApp.Services;
 
-public class BankingService
+public class BankingService : IBankingService
 {
     private readonly IAccountRepository accountRepository;
 

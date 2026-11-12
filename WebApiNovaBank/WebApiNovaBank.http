@@ -1,0 +1,108 @@
+@baseUrl = http://localhost:5150
+@accountName = API Test User
+@accountNumber = replace-with-created-account-number
+@customerToken = replace-with-customer-access-token
+@adminToken = replace-with-admin-access-token
+
+### Create an account
+POST {{baseUrl}}/api/accounts
+Content-Type: application/json
+
+{
+  "customerName": "{{accountName}}",
+  "city": "Lagos",
+  "phoneNumber": "08012345678",
+  "password": "LocalDemo!Password12"
+}
+
+### Obtain a customer token
+POST {{baseUrl}}/api/auth/token
+Content-Type: application/json
+
+{
+  "userName": "{{accountName}}",
+  "password": "LocalDemo!Password12"
+}
+
+### Get my account
+GET {{baseUrl}}/api/accounts/me
+Authorization: Bearer {{customerToken}}
+
+### Deposit
+POST {{baseUrl}}/api/accounts/me/deposits
+Authorization: Bearer {{customerToken}}
+Content-Type: application/json
+
+{
+  "amount": 250.00
+}
+
+### Withdraw
+POST {{baseUrl}}/api/accounts/me/withdrawals
+Authorization: Bearer {{customerToken}}
+Content-Type: application/json
+
+{
+  "amount": 25.00
+}
+
+### List bill categories
+GET {{baseUrl}}/api/accounts/me/bill-categories
+Authorization: Bearer {{customerToken}}
+
+### Pay a bill
+POST {{baseUrl}}/api/accounts/me/bill-payments
+Authorization: Bearer {{customerToken}}
+Content-Type: application/json
+
+{
+  "category": "Electricity Bill",
+  "amount": 75.00
+}
+
+### Get transaction history
+GET {{baseUrl}}/api/accounts/me/transactions
+Authorization: Bearer {{customerToken}}
+
+### Get currency portfolio
+GET {{baseUrl}}/api/accounts/me/portfolio
+Authorization: Bearer {{customerToken}}
+
+### Submit an airtime provider payment
+POST {{baseUrl}}/api/provider-bill-payments/airtime
+Authorization: Bearer {{customerToken}}
+Content-Type: application/json
+
+{
+  "transactionId": "4cf56440-704c-4c08-86a3-b855dd4932f4",
+  "phoneNumber": "08012345678",
+  "amount": 10.00
+}
+
+### Get an owned provider payment status
+GET {{baseUrl}}/api/provider-bill-payments/4cf56440-704c-4c08-86a3-b855dd4932f4
+Authorization: Bearer {{customerToken}}
+
+### Obtain an administrator token
+POST {{baseUrl}}/api/auth/token
+Content-Type: application/json
+
+{
+  "userName": "replace-with-configured-admin-user",
+  "password": "replace-with-configured-admin-password"
+}
+
+### List accounts (admin)
+GET {{baseUrl}}/api/admin/accounts
+Authorization: Bearer {{adminToken}}
+
+### Freeze an account (admin)
+PUT {{baseUrl}}/api/admin/accounts/{{accountNumber}}/freeze
+Authorization: Bearer {{adminToken}}
+
+### List provider payment history (admin)
+GET {{baseUrl}}/api/admin/provider-bill-payments
+Authorization: Bearer {{adminToken}}
+
+### OpenAPI document (development)
+GET {{baseUrl}}/openapi/v1.json

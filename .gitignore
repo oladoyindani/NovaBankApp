@@ -1,2 +1,11 @@
 /NovaBankApp/bin
 /NovaBankApp/obj
+/WebApiNovaBank/bin
+/WebApiNovaBank/obj
+*.csproj.user
+# Visual Studio cache/options directory
+.vs/
+
+# Common .NET build folders (good practice to ignore as well)
+bin/
+obj/

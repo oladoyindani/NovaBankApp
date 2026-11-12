@@ -5,6 +5,7 @@ public record BillPaymentRecord(
     BillPaymentType PaymentType,
     string PhoneNumber,
     decimal Amount,
-    DateTime ProcessedAt,
+    DateTimeOffset ProcessedAt,
     bool IsSuccessful,
-    string Message);
+    string Message,
+    string? AccountNumber = null);

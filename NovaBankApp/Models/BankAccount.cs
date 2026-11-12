@@ -32,7 +32,7 @@ public class BankAccount
         lock (syncRoot)
         {
             Balance += amount;
-            transactions.Add(new Transaction(DateTime.Now, description));
+            transactions.Add(new Transaction(DateTimeOffset.UtcNow, description));
         }
     }
 
@@ -42,14 +42,14 @@ public class BankAccount
         {
             if (amount > Balance) return false;
             Balance -= amount;
-            transactions.Add(new Transaction(DateTime.Now, description));
+            transactions.Add(new Transaction(DateTimeOffset.UtcNow, description));
             return true;
         }
     }
 
     public void AddAuditEntry(string description)
     {
-        lock (syncRoot) transactions.Add(new Transaction(DateTime.Now, description));
+        lock (syncRoot) transactions.Add(new Transaction(DateTimeOffset.UtcNow, description));
     }
 
     public void SetFrozen(bool isFrozen)
@@ -57,7 +57,7 @@ public class BankAccount
         lock (syncRoot)
         {
             IsFrozen = isFrozen;
-            transactions.Add(new Transaction(DateTime.Now, isFrozen ? "Account frozen by administrator" : "Account unfrozen by administrator"));
+            transactions.Add(new Transaction(DateTimeOffset.UtcNow, isFrozen ? "Account frozen by administrator" : "Account unfrozen by administrator"));
         }
     }
 }
