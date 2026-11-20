@@ -3,6 +3,9 @@
 @accountNumber = replace-with-created-account-number
 @customerToken = replace-with-customer-access-token
 @adminToken = replace-with-admin-access-token
+@partnerKey = replace-with-configured-partner-key
+@transferId = {{$guid}}
+@paymentTransactionId = {{$guid}}
 
 ### Create an account
 POST {{baseUrl}}/api/accounts
@@ -74,14 +77,38 @@ Authorization: Bearer {{customerToken}}
 Content-Type: application/json
 
 {
-  "transactionId": "4cf56440-704c-4c08-86a3-b855dd4932f4",
+  "transactionId": "{{paymentTransactionId}}",
   "phoneNumber": "08012345678",
   "amount": 10.00
 }
 
 ### Get an owned provider payment status
-GET {{baseUrl}}/api/provider-bill-payments/4cf56440-704c-4c08-86a3-b855dd4932f4
+GET {{baseUrl}}/api/provider-bill-payments/{{paymentTransactionId}}
 Authorization: Bearer {{customerToken}}
+
+### Submit an inter-bank transfer (requires partner URL in the allow-list)
+POST {{baseUrl}}/api/accounts/me/inter-bank-transfers
+Authorization: Bearer {{customerToken}}
+Content-Type: application/json
+
+{
+  "transferId": "{{transferId}}",
+  "bankUrl": "http://localhost:5001",
+  "recipientAccountNumber": "1000000001",
+  "amount": 10.00
+}
+
+### Receive an inter-bank transfer from a partner API
+POST {{baseUrl}}/api/transfers
+X-NovaBank-Partner-Key: {{partnerKey}}
+Content-Type: application/json
+
+{
+  "transferId": "{{transferId}}",
+  "recipientAccountNumber": "{{accountNumber}}",
+  "senderName": "Partner Bank Customer",
+  "amount": 10.00
+}
 
 ### Obtain an administrator token
 POST {{baseUrl}}/api/auth/token

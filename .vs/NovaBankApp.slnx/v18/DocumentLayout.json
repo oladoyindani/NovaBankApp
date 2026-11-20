@@ -3,8 +3,48 @@
   "WorkspaceRootPath": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D2C9E0D8-9E06-47E3-95D5-C97BA7604CC3}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D2C9E0D8-9E06-47E3-95D5-C97BA7604CC3}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\controllers\\bankingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\controllers\\bankingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\contracts\\paybillrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\contracts\\paybillrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\contracts\\providerbillpaymentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\contracts\\providerbillpaymentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\contracts\\internaltransferrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\contracts\\internaltransferrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E64E8C17-3CEA-1A8C-58CA-FDC76D1AF8B1}|NovaBankApp\\NovaBankApp.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\novabankapp\\services\\bankingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E64E8C17-3CEA-1A8C-58CA-FDC76D1AF8B1}|NovaBankApp\\NovaBankApp.csproj|solutionrelative:novabankapp\\services\\bankingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\webapinovabank.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\webapinovabank.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\contracts\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\contracts\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\contracts\\createaccountrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\contracts\\createaccountrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\contracts\\accesstokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\contracts\\accesstokenresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\webapinovabank\\controllers\\accountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84EC5A95-C4EE-438B-8CBD-A45B99C4B7CA}|WebApiNovaBank\\WebApiNovaBank.csproj|solutionrelative:webapinovabank\\controllers\\accountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E64E8C17-3CEA-1A8C-58CA-FDC76D1AF8B1}|NovaBankApp\\NovaBankApp.csproj|c:\\users\\oladoyin.taiwo-agoi\\onedrive - tatumbank\\documents\\projects\\novabankapp\\novabankapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -18,7 +58,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,20 +66,150 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "WeatherForecastController.cs",
-              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Controllers\\WeatherForecastController.cs",
-              "RelativeDocumentMoniker": "WebApiNovaBank\\Controllers\\WeatherForecastController.cs",
-              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Controllers\\WeatherForecastController.cs",
-              "RelativeToolTip": "WebApiNovaBank\\Controllers\\WeatherForecastController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Program.cs",
+              "RelativeDocumentMoniker": "WebApiNovaBank\\Program.cs",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Program.cs",
+              "RelativeToolTip": "WebApiNovaBank\\Program.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAuwAwAAABbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T11:38:17.367Z",
+              "WhenOpened": "2026-11-16T08:31:40.609Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BankingService.cs",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\NovaBankApp\\Services\\BankingService.cs",
+              "RelativeDocumentMoniker": "NovaBankApp\\Services\\BankingService.cs",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\NovaBankApp\\Services\\BankingService.cs",
+              "RelativeToolTip": "NovaBankApp\\Services\\BankingService.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAuwCcAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-16T08:28:43.056Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BankingController.cs",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Controllers\\BankingController.cs",
+              "RelativeDocumentMoniker": "WebApiNovaBank\\Controllers\\BankingController.cs",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Controllers\\BankingController.cs",
+              "RelativeToolTip": "WebApiNovaBank\\Controllers\\BankingController.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAcwLYAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-16T08:19:06.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProviderBillPaymentRequest.cs",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\ProviderBillPaymentRequest.cs",
+              "RelativeDocumentMoniker": "WebApiNovaBank\\Contracts\\ProviderBillPaymentRequest.cs",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\ProviderBillPaymentRequest.cs",
+              "RelativeToolTip": "WebApiNovaBank\\Contracts\\ProviderBillPaymentRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-16T08:09:02.531Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "PayBillRequest.cs",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\PayBillRequest.cs",
+              "RelativeDocumentMoniker": "WebApiNovaBank\\Contracts\\PayBillRequest.cs",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\PayBillRequest.cs",
+              "RelativeToolTip": "WebApiNovaBank\\Contracts\\PayBillRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-16T08:09:00.197Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "LoginRequest.cs",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\LoginRequest.cs",
+              "RelativeDocumentMoniker": "WebApiNovaBank\\Contracts\\LoginRequest.cs",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\LoginRequest.cs",
+              "RelativeToolTip": "WebApiNovaBank\\Contracts\\LoginRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-16T08:08:58.514Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "InternalTransferRequest.cs",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\InternalTransferRequest.cs",
+              "RelativeDocumentMoniker": "WebApiNovaBank\\Contracts\\InternalTransferRequest.cs",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\InternalTransferRequest.cs",
+              "RelativeToolTip": "WebApiNovaBank\\Contracts\\InternalTransferRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-16T08:08:55.933Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "WebApiNovaBank.http",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\WebApiNovaBank.http",
+              "RelativeDocumentMoniker": "WebApiNovaBank\\WebApiNovaBank.http",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\WebApiNovaBank.http",
+              "RelativeToolTip": "WebApiNovaBank\\WebApiNovaBank.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2026-11-16T07:36:48.284Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CreateAccountRequest.cs",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\CreateAccountRequest.cs",
+              "RelativeDocumentMoniker": "WebApiNovaBank\\Contracts\\CreateAccountRequest.cs",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\CreateAccountRequest.cs",
+              "RelativeToolTip": "WebApiNovaBank\\Contracts\\CreateAccountRequest.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-16T08:08:39.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AccessTokenResponse.cs",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\AccessTokenResponse.cs",
+              "RelativeDocumentMoniker": "WebApiNovaBank\\Contracts\\AccessTokenResponse.cs",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Contracts\\AccessTokenResponse.cs",
+              "RelativeToolTip": "WebApiNovaBank\\Contracts\\AccessTokenResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-16T07:36:41.696Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AccountsController.cs",
+              "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Controllers\\AccountsController.cs",
+              "RelativeDocumentMoniker": "WebApiNovaBank\\Controllers\\AccountsController.cs",
+              "ToolTip": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\WebApiNovaBank\\Controllers\\AccountsController.cs",
+              "RelativeToolTip": "WebApiNovaBank\\Controllers\\AccountsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-13T08:32:25.21Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\oladoyin.taiwo-agoi\\OneDrive - tatumbank\\Documents\\Projects\\NovaBankApp\\NovaBankApp\\Program.cs",
               "RelativeDocumentMoniker": "NovaBankApp\\Program.cs",

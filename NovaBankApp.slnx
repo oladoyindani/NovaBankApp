@@ -1,4 +1,9 @@
 <Solution>
+  <Project Path="NovaBank.Domain/NovaBank.Domain.csproj" />
+  <Project Path="NovaBank.Application/NovaBank.Application.csproj" />
+  <Project Path="NovaBank.Infrastructure/NovaBank.Infrastructure.csproj" />
+  <Project Path="NovaBank.Contracts/NovaBank.Contracts.csproj" />
+  <Project Path="NovaBank.ApiClient/NovaBank.ApiClient.csproj" />
   <Project Path="NovaBankApp/NovaBankApp.csproj" />
   <Project Path="WebApiNovaBank/WebApiNovaBank.csproj" />
 </Solution>

@@ -1,233 +1,309 @@
-using NovaBankApp.Configuration;
-using NovaBankApp.Data;
-using NovaBankApp.Models;
-using NovaBankApp.Network;
-using NovaBankApp.Services;
+using System.Net.Http;
+using NovaBank.ApiClient;
 using NovaBankApp.Ui;
+using WebApiNovaBank.Contracts;
 
 namespace NovaBankApp.Application;
 
-public class NovaBankApplication
+public sealed class NovaBankApplication(BankApiClient apiClient)
 {
-    private readonly ConsoleUi ui = new();
-    private readonly AuthenticationService authenticationService = new();
-    private readonly IAccountRepository accountRepository = new InMemoryAccountRepository();
-    private readonly IBillPaymentRepository billPaymentRepository = new InMemoryBillPaymentRepository();
-    private readonly IReadOnlyList<BillCategory> billCategories =
+    private static readonly IReadOnlyList<string> BillCategories =
     [
-        new("1", "Airtime Recharge"), new("2", "Data Bundle"), new("3", "Electricity Bill"),
-        new("4", "Cable TV Subscription"), new("5", "Broadband ISP")
+        "Airtime Recharge",
+        "Data Bundle",
+        "Electricity Bill",
+        "Cable TV Subscription",
+        "Broadband ISP"
     ];
 
-    public void Run(string[] arguments)
-    {
-        var bankingService = new BankingService(accountRepository);
-        var accountService = new AccountService(accountRepository, authenticationService);
-        var adminService = new AdminService(accountRepository);
-        var billPaymentProviderService = new BillPaymentProviderService(billPaymentRepository);
-        var interBankTransferService = new InterBankTransferService(bankingService, new HttpInterBankTransferClient());
-        var options = BankServerOptions.FromArguments(arguments);
-        using var transferServer = new InterBankTransferServer(bankingService, billPaymentProviderService);
+    private readonly ConsoleUi ui = new();
 
-        accountService.SeedDemoAccounts();
+    public async Task RunAsync(CancellationToken cancellationToken = default)
+    {
         ui.ShowStartupBanner();
-        var started = transferServer.Start(options.Port, out var serverMessage);
-        ui.ShowMessage(serverMessage, started ? ConsoleColor.DarkGray : ConsoleColor.Yellow);
-        ShowHomeMenu(accountService, bankingService, adminService, billPaymentProviderService, interBankTransferService);
-    }
+        ui.ShowMessage("API: " + apiClient.BaseAddress, ConsoleColor.DarkGray);
 
-    private void ShowHomeMenu(AccountService accountService, BankingService bankingService, AdminService adminService, BillPaymentProviderService billPaymentProviderService, InterBankTransferService interBankTransferService)
-    {
         var running = true;
         while (running)
         {
             switch (ui.PromptHomeMenu())
             {
-                case "1": CreateAccount(accountService); break;
-                case "2": Login(bankingService, adminService, billPaymentProviderService, interBankTransferService); break;
-                case "3": running = false; ui.ShowMessage("Thank you for banking with NovaBank. Goodbye!", ConsoleColor.Yellow); break;
-                default: ui.ShowMessage("Select a number from 1 to 3.", ConsoleColor.Red); break;
+                case "1":
+                    await CreateAccountAsync(cancellationToken);
+                    break;
+                case "2":
+                    await LoginAsync(cancellationToken);
+                    break;
+                case "3":
+                    running = false;
+                    ui.ShowMessage("Thank you for banking with NovaBank. Goodbye!", ConsoleColor.Yellow);
+                    break;
+                default:
+                    ui.ShowMessage("Select a number from 1 to 3.", ConsoleColor.Red);
+                    break;
             }
         }
     }
 
-    private void CreateAccount(AccountService accountService)
+    private async Task CreateAccountAsync(CancellationToken cancellationToken)
     {
         ui.ShowMessage("\n=== CREATE NOVABANK ACCOUNT ===", ConsoleColor.Cyan);
-        var name = ui.Prompt("Full name / login user name: ");
-        var city = ui.Prompt("City: ");
-        var phoneNumber = ui.Prompt("Phone number: ");
-        var password = ui.Prompt("Create password (at least 12 characters): ");
-        var result = accountService.CreateAccount(name, city, phoneNumber, password, out var account);
-
-        if (!result.IsSuccessful || account is null)
+        var request = new CreateAccountRequest
         {
-            ShowResult(result);
-            return;
-        }
+            CustomerName = ui.Prompt("Full name / login user name: "),
+            City = ui.Prompt("City: "),
+            PhoneNumber = ui.Prompt("Phone number: "),
+            Password = ui.Prompt("Create password (at least 12 characters): ")
+        };
 
-        ui.ShowAccountCreated(account);
+        await RunApiActionAsync(async () =>
+        {
+            var account = await apiClient.CreateAccountAsync(request, cancellationToken);
+            ui.ShowAccountCreated(account);
+        });
     }
 
-    private void Login(BankingService bankingService, AdminService adminService, BillPaymentProviderService billPaymentProviderService, InterBankTransferService interBankTransferService)
+    private async Task LoginAsync(CancellationToken cancellationToken)
     {
         ui.ShowMessage("\n=== LOGIN ===", ConsoleColor.Cyan);
-        var userName = ui.Prompt("User name: ");
-        var password = ui.Prompt("Password: ");
-
-        if (adminService.IsAdmin(userName, password))
+        var request = new LoginRequest
         {
-            ui.ShowMessage("Administrator login successful.", ConsoleColor.Green);
-            ShowAdminMenu(adminService, billPaymentProviderService);
-            return;
-        }
+            UserName = ui.Prompt("User name: "),
+            Password = ui.Prompt("Password: ")
+        };
 
-        var account = accountRepository.GetByCustomerName(userName);
-        if (account is null || !authenticationService.VerifyPassword(account, password))
+        await RunApiActionAsync(async () =>
         {
-            ui.ShowMessage("Invalid user name or password.", ConsoleColor.Red);
-            return;
-        }
+            var token = await apiClient.LoginAsync(request, cancellationToken);
+            apiClient.SetBearerToken(token.AccessToken);
 
-        ui.ShowMessage($"Welcome back, {account.CustomerName}.", ConsoleColor.Green);
-        ShowCustomerMenu(account, bankingService, interBankTransferService);
+            if (string.Equals(token.Role, "Admin", StringComparison.Ordinal))
+            {
+                ui.ShowMessage("Administrator login successful.", ConsoleColor.Green);
+                await ShowAdminMenuAsync(cancellationToken);
+                return;
+            }
+
+            ui.ShowMessage($"Welcome back, {request.UserName}.", ConsoleColor.Green);
+            await ShowCustomerMenuAsync(cancellationToken);
+        });
     }
 
-    private void ShowCustomerMenu(BankAccount account, BankingService bankingService, InterBankTransferService interBankTransferService)
+    private async Task ShowCustomerMenuAsync(CancellationToken cancellationToken)
     {
         var running = true;
         while (running)
         {
+            var account = await apiClient.GetMyAccountAsync(cancellationToken);
             switch (ui.PromptCustomerMenu(account))
             {
-                case "1": ui.ShowBalance(account); account.AddAuditEntry("Checked balance"); break;
-                case "2": Deposit(account, bankingService); break;
-                case "3": Withdraw(account, bankingService); break;
-                case "4": Transfer(account, bankingService, interBankTransferService); break;
-                case "5": PayBill(account, bankingService); break;
-                case "6": ShowPortfolio(account); break;
-                case "7": ui.ShowTransactions(account); break;
-                case "8": running = false; ui.ShowMessage("You have been logged out.", ConsoleColor.Yellow); break;
-                default: ui.ShowMessage("Select a number from 1 to 8.", ConsoleColor.Red); break;
+                case "1":
+                    ui.ShowBalance(account);
+                    break;
+                case "2":
+                    await DepositAsync(cancellationToken);
+                    break;
+                case "3":
+                    await WithdrawAsync(cancellationToken);
+                    break;
+                case "4":
+                    await TransferAsync(cancellationToken);
+                    break;
+                case "5":
+                    await PayBillAsync(cancellationToken);
+                    break;
+                case "6":
+                    await ShowPortfolioAsync(cancellationToken);
+                    break;
+                case "7":
+                    await ShowTransactionsAsync(cancellationToken);
+                    break;
+                case "8":
+                    running = false;
+                    ui.ShowMessage("You have been logged out.", ConsoleColor.Yellow);
+                    apiClient.ClearBearerToken();
+                    break;
+                default:
+                    ui.ShowMessage("Select a number from 1 to 8.", ConsoleColor.Red);
+                    break;
             }
         }
     }
 
-    private void ShowAdminMenu(AdminService adminService, BillPaymentProviderService billPaymentProviderService)
+    private async Task ShowAdminMenuAsync(CancellationToken cancellationToken)
     {
         var running = true;
         while (running)
         {
             switch (ui.PromptAdminMenu())
             {
-                case "1": ui.ShowAccounts(adminService.GetAccounts()); break;
-                case "2": ShowResult(adminService.Freeze(ui.Prompt("Account number to freeze: "))); break;
-                case "3": ShowResult(adminService.Unfreeze(ui.Prompt("Account number to unfreeze: "))); break;
-                case "4": ui.ShowBillPaymentHistory(billPaymentProviderService.GetPaymentHistory()); break;
-                case "5": running = false; ui.ShowMessage("Administrator logged out.", ConsoleColor.Yellow); break;
-                default: ui.ShowMessage("Select a number from 1 to 5.", ConsoleColor.Red); break;
+                case "1":
+                    await RunApiActionAsync(async () =>
+                        ui.ShowAccounts(await apiClient.GetAccountsAsync(cancellationToken)));
+                    break;
+                case "2":
+                    await SetFrozenStatusAsync(freeze: true, cancellationToken);
+                    break;
+                case "3":
+                    await SetFrozenStatusAsync(freeze: false, cancellationToken);
+                    break;
+                case "4":
+                    await RunApiActionAsync(async () =>
+                        ui.ShowBillPaymentHistory(await apiClient.GetProviderPaymentHistoryAsync(cancellationToken)));
+                    break;
+                case "5":
+                    running = false;
+                    ui.ShowMessage("Administrator logged out.", ConsoleColor.Yellow);
+                    apiClient.ClearBearerToken();
+                    break;
+                default:
+                    ui.ShowMessage("Select a number from 1 to 5.", ConsoleColor.Red);
+                    break;
             }
         }
     }
 
-    private void Deposit(BankAccount account, BankingService bankingService)
+    private Task DepositAsync(CancellationToken cancellationToken) =>
+        RunAmountOperationAsync("Amount to deposit ($): ", apiClient.DepositAsync, cancellationToken);
+
+    private Task WithdrawAsync(CancellationToken cancellationToken) =>
+        RunAmountOperationAsync("Amount to withdraw ($): ", apiClient.WithdrawAsync, cancellationToken);
+
+    private async Task RunAmountOperationAsync(
+        string prompt,
+        Func<AmountRequest, CancellationToken, Task<OperationResponse>> operation,
+        CancellationToken cancellationToken)
     {
-        if (!ConsoleUi.TryReadPositiveAmount(ui.Prompt("Amount to deposit ($): "), out var amount))
+        if (!TryReadAmount(prompt, out var amount))
         {
-            ui.ShowMessage("Enter a valid positive amount.", ConsoleColor.Red);
             return;
         }
-        ShowResult(bankingService.Deposit(account, amount));
-    }
 
-    private void Withdraw(BankAccount account, BankingService bankingService)
-    {
-        if (!ConsoleUi.TryReadPositiveAmount(ui.Prompt("Amount to withdraw ($): "), out var amount))
+        await RunApiActionAsync(async () =>
         {
-            ui.ShowMessage("Enter a valid positive amount.", ConsoleColor.Red);
-            return;
-        }
-        ShowResult(bankingService.Withdraw(account, amount));
+            var result = await operation(new AmountRequest { Amount = amount }, cancellationToken);
+            ui.ShowOperationResult(result);
+        });
     }
 
-    private void Transfer(BankAccount account, BankingService bankingService, InterBankTransferService interBankTransferService)
+    private async Task TransferAsync(CancellationToken cancellationToken)
     {
         switch (ui.PromptTransferMenu())
         {
-            case "1": TransferWithinBank(account, bankingService); break;
-            case "2": TransferToAnotherBank(account, interBankTransferService); break;
-            case "3": break;
-            default: ui.ShowMessage("Select a number from 1 to 3.", ConsoleColor.Red); break;
+            case "1":
+                if (!TryReadAmount("Amount to transfer ($): ", out var amount))
+                {
+                    return;
+                }
+
+                await RunApiActionAsync(async () =>
+                {
+                    var result = await apiClient.TransferWithinBankAsync(
+                        new InternalTransferRequest
+                        {
+                            RecipientAccountNumber = ui.Prompt("Recipient account number: "),
+                            Amount = amount
+                        },
+                        cancellationToken);
+                    ui.ShowOperationResult(result);
+                });
+                break;
+            case "2":
+                if (!TryReadAmount("Amount to transfer ($): ", out var externalAmount))
+                {
+                    return;
+                }
+
+                await RunApiActionAsync(async () =>
+                {
+                    var result = await apiClient.TransferToBankAsync(
+                        new ExternalBankTransferRequest
+                        {
+                            TransferId = Guid.NewGuid(),
+                            BankUrl = ui.Prompt("Receiving bank API base URL: "),
+                            RecipientAccountNumber = ui.Prompt("Receiving account number: "),
+                            Amount = externalAmount
+                        },
+                        cancellationToken);
+                    ui.ShowOperationResult(result);
+                });
+                break;
+            case "3":
+                break;
+            default:
+                ui.ShowMessage("Select a number from 1 to 3.", ConsoleColor.Red);
+                break;
         }
+
     }
 
-    private void TransferWithinBank(BankAccount sender, BankingService bankingService)
+    private async Task PayBillAsync(CancellationToken cancellationToken)
     {
-        var recipient = bankingService.FindRecipient(ui.Prompt("Recipient account number: "));
-        if (recipient is null)
-        {
-            ui.ShowMessage("No local account matches that account number.", ConsoleColor.Red);
-            return;
-        }
-
-        ui.ShowRecipient(recipient);
-        if (!ConsoleUi.TryReadPositiveAmount(ui.Prompt("Amount to transfer ($): "), out var amount))
-        {
-            ui.ShowMessage("Enter a valid positive amount.", ConsoleColor.Red);
-            return;
-        }
-        if (!authenticationService.VerifyPassword(sender, ui.Prompt("Confirm your password to send money: ")))
-        {
-            ui.ShowMessage("Password confirmation failed. Transfer cancelled.", ConsoleColor.Red);
-            return;
-        }
-
-        ShowResult(bankingService.TransferWithinBank(sender, recipient, amount));
-    }
-
-    private void TransferToAnotherBank(BankAccount sender, InterBankTransferService interBankTransferService)
-    {
-        var bankUrl = ui.Prompt("Receiving bank URL (example: http://localhost:5001): ");
-        var recipientAccountNumber = ui.Prompt("Receiving account number: ");
-        if (!ConsoleUi.TryReadPositiveAmount(ui.Prompt("Amount to transfer ($): "), out var amount))
-        {
-            ui.ShowMessage("Enter a valid positive amount.", ConsoleColor.Red);
-            return;
-        }
-        if (!authenticationService.VerifyPassword(sender, ui.Prompt("Confirm your password to send money: ")))
-        {
-            ui.ShowMessage("Password confirmation failed. Transfer cancelled.", ConsoleColor.Red);
-            return;
-        }
-
-        ShowResult(interBankTransferService.TransferAsync(sender, bankUrl, recipientAccountNumber, amount).GetAwaiter().GetResult());
-    }
-
-    private void PayBill(BankAccount account, BankingService bankingService)
-    {
-        var selectedOption = ui.PromptBillCategory(billCategories);
-        var category = billCategories.SingleOrDefault(item => item.MenuOption == selectedOption);
-        if (category is null)
+        var selectedCategory = ui.PromptBillCategory(BillCategories);
+        if (!BillCategories.Contains(selectedCategory, StringComparer.OrdinalIgnoreCase))
         {
             ui.ShowMessage("Invalid bill category selection.", ConsoleColor.Red);
             return;
         }
 
-        ui.Prompt($"Account, meter, or phone number for {category.Name}: ");
-        if (!ConsoleUi.TryReadPositiveAmount(ui.Prompt("Bill amount ($): "), out var amount))
+        if (!TryReadAmount($"Amount to pay for {selectedCategory} ($): ", out var amount))
         {
-            ui.ShowMessage("Enter a valid positive amount.", ConsoleColor.Red);
             return;
         }
-        ShowResult(bankingService.PayBill(account, category, amount));
+
+        await RunApiActionAsync(async () =>
+        {
+            var result = await apiClient.PayBillAsync(
+                new PayBillRequest { Category = selectedCategory, Amount = amount },
+                cancellationToken);
+            ui.ShowOperationResult(result);
+        });
     }
 
-    private void ShowPortfolio(BankAccount account)
+    private async Task ShowPortfolioAsync(CancellationToken cancellationToken) =>
+        await RunApiActionAsync(async () =>
+        {
+            var account = await apiClient.GetMyAccountAsync(cancellationToken);
+            var balances = await apiClient.GetPortfolioAsync(cancellationToken);
+            ui.ShowPortfolio(account.Balance, balances);
+        });
+
+    private async Task ShowTransactionsAsync(CancellationToken cancellationToken) =>
+        await RunApiActionAsync(async () =>
+            ui.ShowTransactions(await apiClient.GetTransactionsAsync(cancellationToken)));
+
+    private async Task SetFrozenStatusAsync(bool freeze, CancellationToken cancellationToken)
     {
-        var currencyWalletService = new CurrencyWalletService();
-        ui.ShowPortfolio(account.Balance, currencyWalletService.GetBalances(account));
-        account.AddAuditEntry("Viewed multi-currency portfolio");
+        var accountNumber = ui.Prompt("Account number: ");
+        await RunApiActionAsync(async () =>
+        {
+            var result = freeze
+                ? await apiClient.FreezeAccountAsync(accountNumber, cancellationToken)
+                : await apiClient.UnfreezeAccountAsync(accountNumber, cancellationToken);
+            ui.ShowOperationResult(result);
+        });
     }
 
-    private void ShowResult(OperationResult result) => ui.ShowMessage(result.Message, result.IsSuccessful ? ConsoleColor.Green : ConsoleColor.Red);
+    private bool TryReadAmount(string prompt, out decimal amount)
+    {
+        if (ConsoleUi.TryReadPositiveAmount(ui.Prompt(prompt), out amount))
+        {
+            return true;
+        }
+
+        ui.ShowMessage("Enter a valid positive amount.", ConsoleColor.Red);
+        return false;
+    }
+
+    private async Task RunApiActionAsync(Func<Task> action)
+    {
+        try
+        {
+            await action();
+        }
+        catch (HttpRequestException exception)
+        {
+            ui.ShowMessage(exception.Message, ConsoleColor.Red);
+        }
+    }
 }

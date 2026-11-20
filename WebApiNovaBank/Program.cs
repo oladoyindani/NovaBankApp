@@ -4,14 +4,18 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using NovaBankApp.Contracts;
-using NovaBankApp.Data;
 using NovaBankApp.Services;
+using NovaBank.Infrastructure;
+using NovaBankApp.Network;
+using WebApiNovaBank.Middleware;
 using WebApiNovaBank.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var jwtOptions = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
     ?? throw new InvalidOperationException("JWT configuration is required.");
+var interBankOptions = builder.Configuration.GetSection(InterBankOptions.SectionName).Get<InterBankOptions>()
+    ?? throw new InvalidOperationException("Inter-bank configuration is required.");
 
 if (string.IsNullOrWhiteSpace(jwtOptions.Issuer)
     || string.IsNullOrWhiteSpace(jwtOptions.Audience)
@@ -19,6 +23,12 @@ if (string.IsNullOrWhiteSpace(jwtOptions.Issuer)
 {
     throw new InvalidOperationException(
         "Configure Jwt:Issuer, Jwt:Audience, and a Jwt:SigningKey of at least 32 UTF-8 bytes using user secrets or environment variables.");
+}
+
+if (Encoding.UTF8.GetByteCount(interBankOptions.PartnerKey) < 32)
+{
+    throw new InvalidOperationException(
+        "Configure InterBank:PartnerKey with a unique value of at least 32 UTF-8 bytes using user secrets or environment variables.");
 }
 
 builder.Services.AddOptions<JwtOptions>()
@@ -30,12 +40,16 @@ builder.Services.AddOptions<AdminCredentialsOptions>()
         && options.Password.Length >= 12,
         "Configure AdminCredentials:UserName and an AdminCredentials:Password of at least 12 characters using user secrets or environment variables.")
     .ValidateOnStart();
+builder.Services.AddOptions<InterBankOptions>()
+    .BindConfiguration(InterBankOptions.SectionName)
+    .ValidateOnStart();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddOpenApi();
 builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<ApiExceptionHandler>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -55,8 +69,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 
-builder.Services.AddSingleton<IAccountRepository, InMemoryAccountRepository>();
-builder.Services.AddSingleton<IBillPaymentRepository, InMemoryBillPaymentRepository>();
 builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IBankingService, BankingService>();
@@ -65,8 +77,23 @@ builder.Services.AddScoped<IBillPaymentProviderService, BillPaymentProviderServi
 builder.Services.AddScoped<ICurrencyWalletService, CurrencyWalletService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
+builder.Services.AddNovaBankInfrastructure(
+    builder.Configuration.GetConnectionString("NovaBank")
+    ?? throw new InvalidOperationException("ConnectionStrings:NovaBank is required."));
+builder.Services.AddScoped<IInterBankTransferService, InterBankTransferService>();
+builder.Services.AddHttpClient<IInterBankTransferClient, HttpInterBankTransferClient>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(10);
+    client.DefaultRequestHeaders.Add("X-NovaBank-Partner-Key", interBankOptions.PartnerKey);
+});
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    using var scope = app.Services.CreateScope();
+    scope.ServiceProvider.GetRequiredService<ISqlDatabaseInitializer>().Initialize();
+}
 
 if (app.Environment.IsDevelopment())
 {

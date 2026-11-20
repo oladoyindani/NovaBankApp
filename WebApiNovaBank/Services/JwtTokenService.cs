@@ -32,6 +32,6 @@ public sealed class JwtTokenService(IOptions<JwtOptions> jwtOptions) : IJwtToken
             expires: expiresAt.UtcDateTime,
             signingCredentials: credentials);
 
-        return new AccessTokenResponse(new JwtSecurityTokenHandler().WriteToken(token), "Bearer", expiresAt);
+        return new AccessTokenResponse(new JwtSecurityTokenHandler().WriteToken(token), "Bearer", expiresAt, user.Role);
     }
 }

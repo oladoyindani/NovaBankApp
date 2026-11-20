@@ -1,4 +1,3 @@
-C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.exe
 C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.deps.json
 C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.runtimeconfig.json
 C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp/NovaBankApp/bin/Debug/net10.0/NovaBankApp.dll
@@ -27,3 +26,35 @@ C:/Users/oladoyin.taiwo-agoi/OneDrive - tatumbank/Documents/Projects/NovaBankApp
 /home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.genruntimeconfig.cache
 /home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/ref/NovaBankApp.dll
 /home/oladoyin-daniel/Documents/TatumProjects/NovaBankApp/NovaBankApp/obj/Debug/net10.0/NovaBankApp.sourcelink.json
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\bin\Debug\net10.0\NovaBankApp.deps.json
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\bin\Debug\net10.0\NovaBankApp.runtimeconfig.json
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\bin\Debug\net10.0\NovaBankApp.dll
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\bin\Debug\net10.0\NovaBankApp.pdb
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\NovaBankApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\NovaBankApp.AssemblyInfoInputs.cache
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\NovaBankApp.AssemblyInfo.cs
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\NovaBankApp.csproj.CoreCompileInputs.cache
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\NovaBankApp.sourcelink.json
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\NovaBankApp.dll
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\refint\NovaBankApp.dll
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\NovaBankApp.pdb
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\NovaBankApp.genruntimeconfig.cache
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\ref\NovaBankApp.dll
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\NovaBankApp.csproj.AssemblyReference.cache
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\bin\Debug\net10.0\NovaBank.ApiClient.dll
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\bin\Debug\net10.0\NovaBank.Contracts.dll
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\bin\Debug\net10.0\NovaBank.Domain.dll
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\bin\Debug\net10.0\NovaBank.Domain.pdb
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\bin\Debug\net10.0\NovaBank.Contracts.pdb
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\bin\Debug\net10.0\NovaBank.ApiClient.pdb
+C:\Users\oladoyin.taiwo-agoi\OneDrive - tatumbank\Documents\Projects\NovaBankApp\NovaBankApp\obj\Debug\net10.0\NovaBank.36D6A436.Up2Date
+C:\Users\oladoyin.taiwo-agoi\AppData\Local\Temp\NovaBankLayerBuild\NovaBankApp.exe
+C:\Users\oladoyin.taiwo-agoi\AppData\Local\Temp\NovaBankLayerBuild\NovaBankApp.deps.json
+C:\Users\oladoyin.taiwo-agoi\AppData\Local\Temp\NovaBankLayerBuild\NovaBankApp.runtimeconfig.json
+C:\Users\oladoyin.taiwo-agoi\AppData\Local\Temp\NovaBankLayerBuild\NovaBankApp.dll
+C:\Users\oladoyin.taiwo-agoi\AppData\Local\Temp\NovaBankLayerBuild\NovaBankApp.pdb
+C:\temp\novabank-build\bin\Debug\net10.0\NovaBankApp.exe
+C:\temp\novabank-build\bin\Debug\net10.0\NovaBankApp.deps.json
+C:\temp\novabank-build\bin\Debug\net10.0\NovaBankApp.runtimeconfig.json
+C:\temp\novabank-build\bin\Debug\net10.0\NovaBankApp.dll
+C:\temp\novabank-build\bin\Debug\net10.0\NovaBankApp.pdb

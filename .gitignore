@@ -2,6 +2,16 @@
 /NovaBankApp/obj
 /WebApiNovaBank/bin
 /WebApiNovaBank/obj
+/NovaBank.Domain/bin
+/NovaBank.Domain/obj
+/NovaBank.Application/bin
+/NovaBank.Application/obj
+/NovaBank.Infrastructure/bin
+/NovaBank.Infrastructure/obj
+/NovaBank.Contracts/bin
+/NovaBank.Contracts/obj
+/NovaBank.ApiClient/bin
+/NovaBank.ApiClient/obj
 *.csproj.user
 # Visual Studio cache/options directory
 .vs/

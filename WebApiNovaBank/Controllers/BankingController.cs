@@ -1,9 +1,11 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using NovaBankApp.Models;
 using NovaBankApp.Services;
 using WebApiNovaBank.Contracts;
+using WebApiNovaBank.Services;
 
 namespace WebApiNovaBank.Controllers;
 
@@ -13,7 +15,9 @@ namespace WebApiNovaBank.Controllers;
 public sealed class BankingController(
     IAccountService accountService,
     IBankingService bankingService,
-    ICurrencyWalletService currencyWalletService) : ControllerBase
+    ICurrencyWalletService currencyWalletService,
+    IInterBankTransferService interBankTransferService,
+    IOptions<InterBankOptions> interBankOptions) : ControllerBase
 {
     private static readonly IReadOnlyList<BillCategory> BillCategories =
     [
@@ -108,6 +112,42 @@ public sealed class BankingController(
             : Conflict(new OperationResponse(false, result.Message));
     }
 
+    /// <summary>Transfer money to a configured partner bank.</summary>
+    [HttpPost("inter-bank-transfers")]
+    [EndpointSummary("Transfer money to a partner bank")]
+    [ProducesResponseType<OperationResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType<OperationResponse>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<OperationResponse>(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<OperationResponse>> TransferToBank(
+        ExternalBankTransferRequest request,
+        CancellationToken cancellationToken)
+    {
+        if (request.TransferId == Guid.Empty || !IsAllowedPartnerUrl(request.BankUrl))
+        {
+            return BadRequest(new OperationResponse(
+                false,
+                "The transfer ID is invalid or the destination bank is not in the configured partner allow-list."));
+        }
+
+        var sender = GetCurrentAccount();
+        if (sender is null)
+        {
+            return NotFound();
+        }
+
+        var result = await interBankTransferService.TransferAsync(
+            sender,
+            request.TransferId,
+            request.BankUrl,
+            request.RecipientAccountNumber,
+            request.Amount,
+            cancellationToken);
+
+        return result.IsSuccessful
+            ? Ok(new OperationResponse(true, result.Message))
+            : Conflict(new OperationResponse(false, result.Message));
+    }
+
     /// <summary>Pay a supported bill from the authenticated customer's account.</summary>
     [HttpPost("bill-payments")]
     [EndpointSummary("Pay a bill")]
@@ -186,4 +226,21 @@ public sealed class BankingController(
         account.PhoneNumber,
         account.Balance,
         account.IsFrozen);
+
+    private bool IsAllowedPartnerUrl(string bankUrl)
+    {
+        if (!Uri.TryCreate(bankUrl, UriKind.Absolute, out var requested)
+            || requested.Scheme is not ("http" or "https")
+            || requested.UserInfo.Length != 0
+            || requested.Query.Length != 0
+            || requested.Fragment.Length != 0
+            || requested.AbsolutePath != "/")
+        {
+            return false;
+        }
+
+        return interBankOptions.Value.AllowedBankUrls.Any(allowed =>
+            Uri.TryCreate(allowed, UriKind.Absolute, out var configured)
+            && string.Equals(requested.GetLeftPart(UriPartial.Authority), configured.GetLeftPart(UriPartial.Authority), StringComparison.OrdinalIgnoreCase));
+    }
 }

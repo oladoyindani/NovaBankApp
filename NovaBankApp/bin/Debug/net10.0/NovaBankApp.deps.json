@@ -7,14 +7,61 @@
   "targets": {
     ".NETCoreApp,Version=v10.0": {
       "NovaBankApp/1.0.0": {
+        "dependencies": {
+          "NovaBank.ApiClient": "1.0.0",
+          "NovaBank.Contracts": "1.0.0",
+          "NovaBank.Domain": "1.0.0"
+        },
         "runtime": {
           "NovaBankApp.dll": {}
+        }
+      },
+      "NovaBank.ApiClient/1.0.0": {
+        "dependencies": {
+          "NovaBank.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "NovaBank.ApiClient.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "NovaBank.Contracts/1.0.0": {
+        "runtime": {
+          "NovaBank.Contracts.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "NovaBank.Domain/1.0.0": {
+        "runtime": {
+          "NovaBank.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }
   },
   "libraries": {
     "NovaBankApp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NovaBank.ApiClient/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NovaBank.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "NovaBank.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

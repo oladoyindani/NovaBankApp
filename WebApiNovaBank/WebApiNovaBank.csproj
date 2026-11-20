@@ -10,7 +10,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
-    <ProjectReference Include="..\NovaBankApp\NovaBankApp.csproj" />
+    <ProjectReference Include="..\NovaBank.Domain\NovaBank.Domain.csproj" />
+    <ProjectReference Include="..\NovaBank.Application\NovaBank.Application.csproj" />
+    <ProjectReference Include="..\NovaBank.Infrastructure\NovaBank.Infrastructure.csproj" />
+    <ProjectReference Include="..\NovaBank.Contracts\NovaBank.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

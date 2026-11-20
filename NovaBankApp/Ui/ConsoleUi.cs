@@ -1,9 +1,8 @@
-using NovaBankApp.Models;
-using NovaBankApp.Services;
+using WebApiNovaBank.Contracts;
 
 namespace NovaBankApp.Ui;
 
-public class ConsoleUi
+public sealed class ConsoleUi
 {
     public void ShowStartupBanner()
     {
@@ -31,7 +30,7 @@ public class ConsoleUi
         return Prompt("Select an option (1-3): ");
     }
 
-    public string PromptCustomerMenu(BankAccount account)
+    public string PromptCustomerMenu(AccountResponse account)
     {
         Console.WriteLine($"\nCUSTOMER PORTAL - {account.CustomerName} ({account.AccountNumber})");
         Console.WriteLine("  1. Check Balance\n  2. Deposit Funds\n  3. Withdraw Funds\n  4. Transfer Funds\n  5. Pay Bills\n  6. Multi-Currency Wallet\n  7. View Transaction History\n  8. Logout");
@@ -50,45 +49,65 @@ public class ConsoleUi
         return Prompt("Select transfer type (1-3): ");
     }
 
-    public string PromptBillCategory(IReadOnlyList<BillCategory> categories)
+    public string PromptBillCategory(IReadOnlyList<string> categories)
     {
         Console.WriteLine("=== BILL PAYMENTS PORTAL ===");
-        foreach (var category in categories) Console.WriteLine($"  {category.MenuOption}. {category.Name}");
-        return Prompt("Select bill category: ");
+        for (var index = 0; index < categories.Count; index++)
+        {
+            Console.WriteLine($"  {index + 1}. {categories[index]}");
+        }
+
+        return Prompt("Enter bill category name: ");
     }
 
-    public void ShowAccountCreated(BankAccount account)
+    public void ShowAccountCreated(AccountResponse account)
     {
-        ShowMessage("\n[Account Created] Your account has been opened with a $0.00 balance.", ConsoleColor.Green);
+        ShowMessage("\n[Account Created]", ConsoleColor.Green);
         ShowMessage($"YOUR NOVABANK ACCOUNT NUMBER: {account.AccountNumber}", ConsoleColor.Yellow);
         ShowMessage("Copy and save this number now. You will need it to receive transfers.", ConsoleColor.Yellow);
     }
 
-    public void ShowRecipient(BankAccount recipient) => ShowMessage($"Recipient found: {recipient.CustomerName} | {recipient.City} | Account: {recipient.AccountNumber}", ConsoleColor.Cyan);
+    public void ShowBalance(AccountResponse account) =>
+        ShowMessage($"Current Balance: ${account.Balance:N2}", ConsoleColor.Cyan);
 
-    public void ShowBalance(BankAccount account) => ShowMessage($"Current Balance: ${account.Balance:N2}", ConsoleColor.Cyan);
+    public void ShowOperationResult(OperationResponse result) =>
+        ShowMessage(result.Message, result.IsSuccessful ? ConsoleColor.Green : ConsoleColor.Red);
 
-    public void ShowPortfolio(decimal usdBalance, IReadOnlyList<CurrencyBalance> balances)
+    public void ShowPortfolio(decimal usdBalance, IReadOnlyList<CurrencyBalanceResponse> balances)
     {
         ShowMessage("\n=== NOVABANK GLOBAL MULTI-CURRENCY WALLET ===", ConsoleColor.Magenta);
         Console.WriteLine($"Base Wallet Balance (USD): ${usdBalance:N2}");
-        foreach (var balance in balances) Console.WriteLine($" * {balance.Name} ({balance.Code} @ {balance.ExchangeRate:N2}): {balance.Symbol}{balance.Amount:N2}");
+        foreach (var balance in balances)
+        {
+            Console.WriteLine($" * {balance.Name} ({balance.Code} @ {balance.ExchangeRate:N2}): {balance.Symbol}{balance.Amount:N2}");
+        }
     }
 
-    public void ShowTransactions(BankAccount account)
+    public void ShowTransactions(IReadOnlyList<TransactionResponse> transactions)
     {
         ShowMessage("=== TRANSACTION AUDIT TRAIL ===", ConsoleColor.Magenta);
-        if (account.Transactions.Count == 0) Console.WriteLine("No transactions recorded yet.");
-        else foreach (var transaction in account.Transactions) Console.WriteLine($" - {transaction}");
+        if (transactions.Count == 0)
+        {
+            Console.WriteLine("No transactions recorded yet.");
+            return;
+        }
+
+        foreach (var transaction in transactions)
+        {
+            Console.WriteLine($" - [{transaction.OccurredAt:HH:mm:ss}] {transaction.Description}");
+        }
     }
 
-    public void ShowAccounts(IReadOnlyList<AccountSummary> accounts)
+    public void ShowAccounts(IReadOnlyList<AdminAccountResponse> accounts)
     {
         ShowMessage("=== CUSTOMER ACCOUNTS ===", ConsoleColor.Magenta);
-        foreach (var account in accounts) Console.WriteLine($"{account.AccountNumber} | {account.CustomerName} | {account.City} | ${account.Balance:N2} | {(account.IsFrozen ? "FROZEN" : "ACTIVE")}");
+        foreach (var account in accounts)
+        {
+            Console.WriteLine($"{account.AccountNumber} | {account.CustomerName} | {account.City} | ${account.Balance:N2} | {(account.IsFrozen ? "FROZEN" : "ACTIVE")}");
+        }
     }
 
-    public void ShowBillPaymentHistory(IReadOnlyList<BillPaymentRecord> payments)
+    public void ShowBillPaymentHistory(IReadOnlyList<AdminBillPaymentResponse> payments)
     {
         ShowMessage("=== BILL PAYMENT API HISTORY ===", ConsoleColor.Magenta);
         if (payments.Count == 0)
@@ -103,7 +122,8 @@ public class ConsoleUi
         }
     }
 
-    public static bool TryReadPositiveAmount(string input, out decimal amount) => decimal.TryParse(input, out amount) && amount > 0;
+    public static bool TryReadPositiveAmount(string input, out decimal amount) =>
+        decimal.TryParse(input, out amount) && amount > 0;
 
     private static void WriteColored(ConsoleColor color, string message)
     {
